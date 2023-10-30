@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Button,
   FormControl,
@@ -18,9 +20,19 @@ export const ConfigForms = () => {
         <FormLabel as="legend">Choose key mode</FormLabel>
         <RadioGroup defaultValue="macro">
           <HStack spacing="24px">
-            <Radio value="macro">Macro</Radio>
-            <Radio value="regular">Regular</Radio>
-            <Radio value="media">Media</Radio>
+            <Radio value="macro" colorScheme="orange" borderColor={"brand.600"}>
+              Macro
+            </Radio>
+            <Radio
+              value="regular"
+              colorScheme="orange"
+              borderColor={"brand.600"}
+            >
+              Regular
+            </Radio>
+            <Radio value="media" colorScheme="orange" borderColor={"brand.600"}>
+              Media
+            </Radio>
           </HStack>
         </RadioGroup>
         <FormHelperText color={"base.600"}>
@@ -29,9 +41,8 @@ export const ConfigForms = () => {
       </FormControl>
 
       <FormControl>
-        <FormLabel>Key Value</FormLabel>
-        <Input maxW={120} type="text" />
-        <FormHelperText>We'll never share your email.</FormHelperText>
+        <FormLabel>Key Binding</FormLabel>
+        <Input maxW={120} borderColor={"brand.600"} type="text" />
       </FormControl>
     </Stack>
   );

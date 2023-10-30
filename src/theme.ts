@@ -33,10 +33,11 @@ const components = {
       }
     }
   },
-  Input: {
+  Radio: {
     baseStyle: {
-      borderColor: "brand.800"
-    }
+      borderWidth: "1px",
+      borderColor: "brand.700"
+    },
   }
 }
 

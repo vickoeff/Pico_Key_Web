@@ -1,9 +1,28 @@
 "use client";
 
-import { ConfigForms, Keyboard, Switch } from "@/components";
-import { Box, Container, Text, SimpleGrid } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { ConfigForms, Keyboard } from "@/components";
+import { Box, Container, Text, SimpleGrid, useToast } from "@chakra-ui/react";
+import { useSerial } from "@/hooks/useSerial";
 
 export default function Home() {
+  const [selectedSwitch, setSelectedSwitch] = useState<number | null>(null);
+  const toast = useToast();
+  const serial = useSerial();
+
+  useEffect(() => {
+    if (!serial.canUseSerial) {
+      toast({
+        description: "Not Supported Browser!",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
+    }
+  }, [serial.canUseSerial]);
+
+  serial.subscribe((msg) => console.log(msg));
+
   return (
     <Box
       display={"flex"}
@@ -12,15 +31,22 @@ export default function Home() {
       minH={"100vh"}
     >
       <Container maxW={"container.xl"}>
-        <SimpleGrid columns={2} spacing={"10"}>
+        <SimpleGrid columns={{ base: 1, sm: 2 }} spacing={"10"}>
           <Box>
             <Text as="h1" variant={"title"} mb={4}>
               Config Pico Key
             </Text>
-            <ConfigForms />
+            {selectedSwitch !== null ? (
+              <ConfigForms />
+            ) : (
+              <Text>Select the key switch</Text>
+            )}
           </Box>
           <Box>
-            <Keyboard />
+            <Keyboard
+              selectedSwitch={selectedSwitch}
+              onClick={(_idx) => setSelectedSwitch(_idx)}
+            />
           </Box>
         </SimpleGrid>
       </Container>
